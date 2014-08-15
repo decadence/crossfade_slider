@@ -1,6 +1,5 @@
 function crossfade_slider(selector, options)
 {	
-
 	// корневой контейнер
 	var parent = jQuery(selector);
 	
@@ -63,6 +62,8 @@ function crossfade_slider(selector, options)
 			return;
 		}
 		
+		options.beforeStart(current_index);
+		
 		var step = (forward == true) ? 1 : -1;
 		
 		var new_index = current_index + step;
@@ -70,12 +71,23 @@ function crossfade_slider(selector, options)
 		// сбрасываем индекс в начало
 		if(new_index == length)
 		{
+			// ничего не делаем, если опция по кругу отключена
+			if (!options.cycle)
+			{
+				return;
+			}
+			
 			new_index = 0;
 		}
 		
 		// или в конец, если мы уже в начале
 		if (new_index == -1)
 		{
+			if (!options.cycle)
+			{
+				return;
+			}
+			
 			new_index = length - 1;
 		}
 
@@ -109,10 +121,10 @@ function crossfade_slider(selector, options)
 			}
 			
 			running = false;
+			options.afterEnd(current_index);
 		});
 		
 		current_index = new_index;
-		console.log("Current slide: " + current_index);
 	}
 	
 	// запускаем перещёлкивание по таймеру
@@ -132,11 +144,20 @@ jQuery(function()
 		auto: false, // включить ли автоматический переход слайдов
 		timeout: 2000,	// время между автоматическим переходом слайдов
 		fadeTime: 500, // время перехода от слайда к слайду
+		cycle: false, // продолжать ли по кругу при достижении крайнего элемента
 		btnPrev: "#btnPrev", // селекторы для кнопок Далее / Назад
 		btnNext: "#btnNext",
 		adjustParent: true, // изменять ли высоту родителя под новый слайд
 		animateParent: true, // анимировать ли высоту родителя
-		animateParentDuration: 400 // длительность анимации высоты родителя
+		animateParentDuration: 400, // длительность анимации высоты родителя
+		beforeStart: function(current_index) // колбек на начало перехода слайда
+		{
+			console.log(current_index);
+		},
+		afterEnd: function(current_index) // колбек на окончание перехода слайда
+		{
+			console.log(current_index);
+		}
 	});
 });
 
