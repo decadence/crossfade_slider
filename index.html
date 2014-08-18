@@ -12,6 +12,36 @@
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script src="./crossfade.js"></script>
 
+
+<script>
+var slider;
+jQuery(window).load(function()
+{
+	slider = crossfade_slider("#slider", {
+		auto: false, // включить ли автоматический переход слайдов
+		timeout: 2000,	// время между автоматическим переходом слайдов
+		fadeTime: 500, // время перехода от слайда к слайду
+		cycle: false, // продолжать ли по кругу при достижении крайнего элемента
+		btnPrev: "#btnPrev", // селекторы для кнопок Далее / Назад
+		btnNext: "#btnNext",
+		adjustParent: true, // изменять ли высоту родителя под новый слайд
+		animateParent: true, // анимировать ли высоту родителя
+		animateParentDuration: 400, // длительность анимации высоты родителя
+		beforeStart: function(current_index) // колбек на начало перехода слайда
+		{
+			console.log(current_index);
+		},
+		afterEnd: function(current_index) // колбек на окончание перехода слайда
+		{
+			console.log(current_index);
+		}
+	});
+	
+	// далее используем возвращенный объект
+	console.log(slider.get_current_index());
+});
+</script>
+
 </head>
 
 
@@ -19,9 +49,9 @@
 
 <div id="slider">
 	<ul>
-		<li>11111111111111111111111<br><br><br>11111111111</li>
-		<li>2222222222<br><br>2222222222222222222<br><br>22222222222222222222222</li>
-		<li>33333333333<br><br>3333333333333333333<br><br>333333333333333<br><br>33333333333333<br><br>3333333333333333333</li>
+		<li><img src="http://placehold.it/540x320" /></li>
+		<li><img src="http://placehold.it/533x320" /></li>
+		<li><img src="http://placehold.it/512x320" /></li>
 	</ul>
 </div>
 

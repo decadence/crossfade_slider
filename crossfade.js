@@ -1,3 +1,9 @@
+/*
+	Имя: Crossfade Slider
+	Автор: Исадов Виктор (http://vk.com/v_decadence)
+*/
+
+
 function crossfade_slider(selector, options)
 {
 	// корневой контейнер
@@ -24,7 +30,8 @@ function crossfade_slider(selector, options)
 		"zIndex": 0,
 		"left": 0,
 		"top": 0,
-		"display": "none"
+		"display": "none",
+		"width": "100%"
 	});
 	
 	parent.css("overflow", "hidden");
@@ -52,8 +59,7 @@ function crossfade_slider(selector, options)
 	{
 		parent.height(collection.eq(current_index).height());
 	}
-	
-	
+
 	function go_to_index(index)
 	{
 		if (index < 0 || index >= length)
@@ -146,6 +152,7 @@ function crossfade_slider(selector, options)
 			
 			running = false;
 			options.afterEnd(current_index);
+			ul.height(new_height);
 		});
 		
 		current_index = new_index;
@@ -181,33 +188,7 @@ function crossfade_slider(selector, options)
 	return returner;
 }
 
-var slider;
-jQuery(function()
-{
-	slider = crossfade_slider("#slider", {
-		auto: false, // включить ли автоматический переход слайдов
-		timeout: 2000,	// время между автоматическим переходом слайдов
-		fadeTime: 500, // время перехода от слайда к слайду
-		cycle: false, // продолжать ли по кругу при достижении крайнего элемента
-		btnPrev: "#btnPrev", // селекторы для кнопок Далее / Назад
-		btnNext: "#btnNext",
-		adjustParent: true, // изменять ли высоту родителя под новый слайд
-		animateParent: true, // анимировать ли высоту родителя
-		animateParentDuration: 400, // длительность анимации высоты родителя
-		beforeStart: function(current_index) // колбек на начало перехода слайда
-		{
-			console.log(current_index);
-		},
-		afterEnd: function(current_index) // колбек на окончание перехода слайда
-		{
-			console.log(current_index);
-		}
-	});
-	
-	
-	// далее используем возвращенный объект
-	console.log(slider.get_current_index());
-});
+
 
 
 

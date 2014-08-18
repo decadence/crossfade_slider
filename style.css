@@ -4,9 +4,29 @@
 	padding: 0;
 }
 
+ul
+{
+	list-style: none;
+}
+
 #slider
 {
 	border: 1px solid red;
+	width: 80%;
+	margin: 10px auto;
+}
+
+#slider li
+{
+	display: block;
+}
+
+#slider li img
+{
+	width: 100%;
+	height: auto;
+	
+	display: block;
 }
 
 
