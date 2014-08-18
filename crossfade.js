@@ -1,5 +1,5 @@
 function crossfade_slider(selector, options)
-{	
+{
 	// корневой контейнер
 	var parent = jQuery(selector);
 	
@@ -53,9 +53,22 @@ function crossfade_slider(selector, options)
 		parent.height(collection.eq(current_index).height());
 	}
 	
-	// переключение слайда
-	function slide(forward)
+	
+	function go_to_index(index)
 	{
+		if (index < 0 || index >= length)
+		{
+			console.log('Неверный индекс');
+			return false;
+		}
+	
+		slide(true, index);
+	}
+	
+	// переключение слайда
+	function slide(forward, index)
+	{
+	
 		// ничего не делаем, если анимация уже активна
 		if (running)
 		{
@@ -64,40 +77,51 @@ function crossfade_slider(selector, options)
 		
 		options.beforeStart(current_index);
 		
-		var step = (forward == true) ? 1 : -1;
 		
-		var new_index = current_index + step;
-			
-		// сбрасываем индекс в начало
-		if(new_index == length)
+		// если индекс не передан, значит двигаемся вперёд / назад
+		if (typeof index === "undefined")
 		{
-			// ничего не делаем, если опция по кругу отключена
-			if (!options.cycle)
+			var step = (forward == true) ? 1 : -1;
+		
+			var new_index = current_index + step;
+				
+			// сбрасываем индекс в начало
+			if(new_index == length)
 			{
-				return;
+				// ничего не делаем, если опция по кругу отключена
+				if (!options.cycle)
+				{
+					return;
+				}
+				
+				new_index = 0;
 			}
 			
-			new_index = 0;
-		}
-		
-		// или в конец, если мы уже в начале
-		if (new_index == -1)
-		{
-			if (!options.cycle)
+			// или в конец, если мы уже в начале
+			if (new_index == -1)
 			{
-				return;
+				if (!options.cycle)
+				{
+					return;
+				}
+				
+				new_index = length - 1;
 			}
 			
-			new_index = length - 1;
 		}
-
+		
+		// иначе наш целевой индекс берём из параметра
+		else
+		{
+			new_index = index;
+		}
+	
+		
 		// индекс, который нужно спрятать
 		var hide_index = current_index;
 		
 		// отводим на задний план текущий элемент, но не скрываем - он пока единственный видимый
 		collection.eq(hide_index).css("zIndex", 0);
-		
-		
 		running = true;
 		
 		// отображаеи поверх новый и плавно увеличиваем его прозрачность
@@ -135,12 +159,32 @@ function crossfade_slider(selector, options)
 			slide(true);
 		}, options.timeout);
 	}
+	
+	
+	// объект, который возвращается. Содержит публичные функции
+	var returner = {
+		go_to: go_to_index,
+		go_next: function()
+		{
+			slide(true);
+		},
+		go_prev: function()
+		{
+			slide(false);
+		},
+		get_current_index: function()
+		{
+			return current_index;
+		}
+	};
+	
+	return returner;
 }
 
-
+var slider;
 jQuery(function()
 {
-	crossfade_slider("#slider", {
+	slider = crossfade_slider("#slider", {
 		auto: false, // включить ли автоматический переход слайдов
 		timeout: 2000,	// время между автоматическим переходом слайдов
 		fadeTime: 500, // время перехода от слайда к слайду
@@ -159,6 +203,10 @@ jQuery(function()
 			console.log(current_index);
 		}
 	});
+	
+	
+	// далее используем возвращенный объект
+	console.log(slider.get_current_index());
 });
 
 
