@@ -4,8 +4,32 @@
 */
 
 
-function crossfade_slider(selector, options)
+function crossfade_slider(selector, user_options)
 {
+	// настройки по умолчанию
+	var options = {
+		auto: false, // включить ли автоматический переход слайдов
+		timeout: 2000,	// время между автоматическим переходом слайдов
+		fadeTime: 500, // время перехода от слайда к слайду
+		cycle: false, // продолжать ли по кругу при достижении крайнего элемента
+		btnPrev: "#btnPrev", // селекторы для кнопок Далее / Назад
+		btnNext: "#btnNext",
+		adjustParent: true, // изменять ли высоту родителя под новый слайд
+		animateParent: true, // анимировать ли высоту родителя
+		animateParentDuration: 400, // длительность анимации высоты родителя
+		beforeStart: function(current_index) // колбек на начало перехода слайда
+		{
+			console.log(current_index);
+		},
+		afterEnd: function(current_index) // колбек на окончание перехода слайда
+		{
+			console.log(current_index);
+		}
+	}
+	
+	
+	options = jQuery.extend(options, user_options);
+	
 	// корневой контейнер
 	var parent = jQuery(selector);
 	
