@@ -18,13 +18,9 @@ function crossfade_slider(selector, user_options)
 		animateParent: true, // анимировать ли высоту родителя
 		animateParentDuration: 400, // длительность анимации высоты родителя
 		beforeStart: function(current_index) // колбек на начало перехода слайда
-		{
-			console.log(current_index);
-		},
+		{},
 		afterEnd: function(current_index) // колбек на окончание перехода слайда
-		{
-			console.log(current_index);
-		}
+		{}
 	}
 	
 	
