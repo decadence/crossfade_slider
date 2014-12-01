@@ -20,7 +20,8 @@ function crossfade_slider(selector, user_options)
 		beforeStart: function(current_index) // колбек на начало перехода слайда
 		{},
 		afterEnd: function(current_index) // колбек на окончание перехода слайда
-		{}
+		{},
+		hover: true // TODO останавливать ли переход при hover
 	}
 	
 	
