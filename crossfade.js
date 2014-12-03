@@ -1,8 +1,7 @@
 /*
 	Имя: Crossfade Slider
-	Автор: Исадов Виктор (http://vk.com/v_decadence)
+	Автор: Исадов Виктор
 */
-
 
 function crossfade_slider(selector, user_options)
 {
@@ -23,7 +22,7 @@ function crossfade_slider(selector, user_options)
 		{}
 	}
 	
-	
+	// объединение стандартных настроек и пользовательских
 	options = jQuery.extend(options, user_options);
 	
 	// корневой контейнер
@@ -188,9 +187,11 @@ function crossfade_slider(selector, user_options)
 	}
 	
 	
-	// объект, который возвращается. Содержит публичные функции
+	// объект, который возвращается. Содержит публичные функции, которые можно использовать для управления слайдером
 	var returner = {
+		// переход к определённому слайду
 		go_to: go_to_index,
+		// переход вперёд / назад
 		go_next: function()
 		{
 			slide(true);
@@ -199,6 +200,7 @@ function crossfade_slider(selector, user_options)
 		{
 			slide(false);
 		},
+		// получение индекса текущего слайда
 		get_current_index: function()
 		{
 			return current_index;
