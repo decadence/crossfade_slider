@@ -141,6 +141,11 @@ function crossfade_slider(selector, user_options)
 		{
 			new_index = index;
 		}
+
+		// если переход на текущий слайд, ничего не делаем
+        if(current_index == new_index){
+            return;
+        }
 	
 		
 		// индекс, который нужно спрятать

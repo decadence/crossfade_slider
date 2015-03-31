@@ -48,3 +48,7 @@ var slider = crossfade_slider("#slider", {
 ## Заметки
 Пока пусто
 
+##TODO
+навигация автоматическая
+
+
