@@ -18,7 +18,10 @@ var slider;
 jQuery(window).load(function()
 {
 	slider = crossfade_slider("#slider", {
-		auto: true
+		auto: true,
+		adjustParent: true,
+		cycle: true,
+		fadeTime: 1000
 	});
 	
 	// далее используем возвращенный объект
@@ -33,9 +36,15 @@ jQuery(window).load(function()
 
 <div id="slider">
 	<ul>
-		<li><img src="http://placehold.it/540x320" /></li>
-		<li><img src="http://placehold.it/533x320" /></li>
-		<li><img src="http://placehold.it/512x320" /></li>
+		<li>
+			<img src="./img/1.jpg" />
+		</li>
+		<li>
+			<img src="./img/2.jpg" />
+		</li>
+		<li>
+			<img src="./img/3.jpg" />
+		</li>
 	</ul>
 </div>
 
