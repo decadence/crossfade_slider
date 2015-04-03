@@ -58,8 +58,7 @@ function crossfade_slider(selector, user_options)
 	jQuery(options.btnNext).click(function(e)
 	{
 		slide(true);
-		e.preventDefault();
-		
+		e.preventDefault();		
 	});
 	
 	jQuery(options.btnPrev).click(function(e)
@@ -78,10 +77,12 @@ function crossfade_slider(selector, user_options)
 		parent.height(collection.eq(current_index).height());
 	}
 
+	/**
+	 * Переход к произвольному индексу
+	*/
 	function go_to_index(index)
 	{
-		if (index < 0 || index >= length)
-		{
+		if (index < 0 || index >= length){
 			console.log('Неверный индекс');
 			return false;
 		}
@@ -89,13 +90,13 @@ function crossfade_slider(selector, user_options)
 		slide(true, index);
 	}
 	
-	// переключение слайда
+	/**
+	 * Переключение слайда
+	*/
 	function slide(forward, index)
 	{
-	
 		// ничего не делаем, если анимация уже активна
-		if (running)
-		{
+		if (running){
 			return;
 		}
 		
@@ -112,7 +113,7 @@ function crossfade_slider(selector, user_options)
 			// сбрасываем индекс в начало
 			if(new_index == length)
 			{
-				// ничего не делаем, если опция по кругу отключена
+				// ничего не делаем, если слайдер не циклический
 				if (!options.cycle)
 				{
 					return;
@@ -124,6 +125,7 @@ function crossfade_slider(selector, user_options)
 			// или в конец, если мы уже в начале
 			if (new_index == -1)
 			{
+				// ничего не делаем, если слайдер не циклический
 				if (!options.cycle)
 				{
 					return;
@@ -146,7 +148,7 @@ function crossfade_slider(selector, user_options)
         }
 	
 		
-		// индекс, который нужно спрятать
+		// индекс слайда, который нужно спрятать
 		var hide_index = current_index;
 		
 		// отводим на задний план текущий элемент, но не скрываем - он пока единственный видимый
@@ -159,7 +161,8 @@ function crossfade_slider(selector, user_options)
 		// отображаеи поверх новый и плавно увеличиваем его прозрачность
 		collection.eq(new_index).css("zIndex", 10).fadeIn(options.fadeTime, function()
 		{
-			collection.eq(hide_index).hide(); // прячем в конце старый по запомненному индексу, так как до callback'a он меняется на новый. Скрытие нужно для работы fadeIn
+			// прячем в конце старый по запомненному индексу, так как до callback'a он меняется на новый. Скрытие нужно для работы fadeIn
+			collection.eq(hide_index).hide(); 
 			
 			// устанавливаем родителю нужную высоту
 			if (options.adjustParent)
@@ -194,10 +197,14 @@ function crossfade_slider(selector, user_options)
 	}
 	
 	
-	// объект, который возвращается. Содержит публичные функции, которые можно использовать для управления слайдером
+	/*
+		Объект, который возвращается. 
+		Содержит публичные функции, которые можно использовать для управления слайдером.
+	*/
 	var returner = {
 		// переход к определённому слайду
 		go_to: go_to_index,
+		
 		// переход вперёд / назад
 		go_next: function()
 		{
@@ -207,6 +214,7 @@ function crossfade_slider(selector, user_options)
 		{
 			slide(false);
 		},
+		
 		// получение индекса текущего слайда
 		get_current_index: function()
 		{
