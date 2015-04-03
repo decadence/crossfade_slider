@@ -5,22 +5,20 @@
 
 function crossfade_slider(selector, user_options)
 {
-	// настройки по умолчанию
+	// настройки по умолчанию, описание в README.md
 	var options = {
-		auto: false, // включить ли автоматический переход слайдов
-		timeout: 2000,	// время между автоматическим переходом слайдов
-		fadeTime: 500, // время перехода от слайда к слайду
-		cycle: false, // продолжать ли по кругу при достижении крайнего элемента
-		btnPrev: "#btnPrev", // селекторы для кнопок Далее / Назад
+		auto: false,
+		timeout: 2000,
+		fadeTime: 500,
+		cycle: false,
+		btnPrev: "#btnPrev",
 		btnNext: "#btnNext",
-		adjustParent: true, // изменять ли высоту родителя под новый слайд
-		animateParent: true, // анимировать ли высоту родителя
-		animateParentDuration: 400, // длительность анимации высоты родителя
-		beforeStart: function(current_index) // колбек на начало перехода слайда
-		{},
-		afterEnd: function(current_index) // колбек на окончание перехода слайда
-		{},
-		hover: true // TODO останавливать ли переход при hover
+		adjustParent: false,
+		animateParent: true,
+		animateParentDuration: 400,
+		beforeStart: function(current_index){},
+		afterEnd: function(current_index){},
+		hover: true
 	}
 	
 	// объединение стандартных настроек и пользовательских
