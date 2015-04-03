@@ -154,6 +154,9 @@ function crossfade_slider(selector, user_options)
 		// отводим на задний план текущий элемент, но не скрываем - он пока единственный видимый
 		collection.eq(hide_index).css("zIndex", 0);
 		running = true;
+
+		// плавно убираем старый слайд, чтобы не было перескакиваний в случае с текстом
+        collection.eq(hide_index).fadeOut(options.fadeTime);
 		
 		// отображаеи поверх новый и плавно увеличиваем его прозрачность
 		collection.eq(new_index).css("zIndex", 10).fadeIn(options.fadeTime, function()
