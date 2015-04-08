@@ -11,11 +11,11 @@
 + Нужный элемент ставится поверх всех с 0 прозрачностью, потом плавно она увеличивается. 
 
 ## Использование
-```javascript
-var slider = crossfade_slider("#slider", {
-    	auto: true
+
+	var slider = crossfade_slider("#slider", {
+	    auto: true
 	});
-```
+
 
 ## Возвращаемый объект
 Содержит функции, которые можно использовать для управления слайдером
@@ -24,11 +24,11 @@ var slider = crossfade_slider("#slider", {
 
     Переход к определённому слайду
     
-+ go_next / go_prev
++ go\_next / go\_prev
 
     Переход вперёд / назад
     
-+ get_current_index
++ get\_current\_index
 
 	Получение индекса текущего слайда
 
