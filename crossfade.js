@@ -8,7 +8,7 @@ function crossfade_slider(selector, user_options)
 	// настройки по умолчанию, описание в README.md
 	var options = {
 		auto: false,
-		timeout: 2000,
+		timeout: 4000,
 		fadeTime: 500,
 		cycle: false,
 		btnPrev: "#btnPrev",
@@ -20,6 +20,8 @@ function crossfade_slider(selector, user_options)
 		afterEnd: function(current_index){},
 		hover: true
 	}
+
+	var timeout;
 	
 	// объединение стандартных настроек и пользовательских
 	options = jQuery.extend(options, user_options);
@@ -77,6 +79,8 @@ function crossfade_slider(selector, user_options)
 		parent.height(collection.eq(current_index).height());
 	}
 
+	set_slide_timeout();
+
 	/**
 	 * Переход к произвольному индексу
 	*/
@@ -88,6 +92,19 @@ function crossfade_slider(selector, user_options)
 		}
 	
 		slide(true, index);
+	}
+
+	// запуск интервала автоматического
+	function set_slide_timeout(){
+		clearTimeout(timeout);
+		// запускаем перещёлкивание по таймеру
+		if (options.auto)
+		{
+			timeout = setTimeout(function()
+			{
+				slide(true);
+			}, options.timeout);
+		}
 	}
 	
 	/**
@@ -154,11 +171,12 @@ function crossfade_slider(selector, user_options)
 		// отводим на задний план текущий элемент, но не скрываем - он пока единственный видимый
 		collection.eq(hide_index).css("zIndex", 0);
 		running = true;
-
-		// плавно убираем старый слайд, чтобы не было перескакиваний в случае с текстом
-        collection.eq(hide_index).fadeOut(options.fadeTime);
 		
-		// отображаеи поверх новый и плавно увеличиваем его прозрачность
+		// плавно убираем старый слайд, чтобы не было перескакиваний в случае с текстом. 
+		// Чуть дольше, чем основной слайд, чтобы не оголять фон
+        collection.eq(hide_index).fadeOut(options.fadeTime+1000);
+
+		// отображаем поверх новый и плавно увеличиваем его прозрачность
 		collection.eq(new_index).css("zIndex", 10).fadeIn(options.fadeTime, function()
 		{
 			// прячем в конце старый по запомненному индексу, так как до callback'a он меняется на новый. Скрытие нужно для работы fadeIn
@@ -182,20 +200,13 @@ function crossfade_slider(selector, user_options)
 			running = false;
 			options.afterEnd(current_index);
 			ul.height(new_height);
+
+			// перезапуск интервала
+			set_slide_timeout();
 		});
 		
 		current_index = new_index;
 	}
-	
-	// запускаем перещёлкивание по таймеру
-	if (options.auto)
-	{
-		setInterval(function()
-		{
-			slide(true);
-		}, options.timeout);
-	}
-	
 	
 	/*
 		Объект, который возвращается. 
